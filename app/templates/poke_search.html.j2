@@ -1,0 +1,63 @@
+{# from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import Email, DataRequired
+class LoginForm(FlaskForm):
+    #field name = DatatypeField('LABEL', validators=[LIST OF validators])
+    email = StringField('Email Address',validators=[DataRequired(),Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login') #}
+
+
+{% extends 'base.html.j2' %}
+
+{% block title%}
+Pokemon Info
+{% endblock title%}
+
+{% block content%}
+<h1>Pokemon Information Search</h1>
+<form action="{{url_for('poke_search')}}" method='POST'>
+{{form.hidden_tag()}}
+    <div class="mb-3">
+        <label for="enter_field" class="form-label">Enter Pokemon Name</label>
+        <input type="text" name = "enter_field" class="form-control" id="field">
+    </div>
+    <div style="color:red;"><small>{{ error }}</small></div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+</form> 
+{# <form action="{{url_for('poke_search')}}" method="POST">
+  <div class="mb-3">
+    <label for="pokemon" class="form-label">Enter Pokemon Name</label>
+    <input type="text" name="pokemon" class="form-control" id="pokemon">
+  </div>
+<span style="color:red;"><small>{{ error }}</small></span>
+  <button type="submit" class="btn btn-primary">Submit</button>
+    </form> #}
+
+{% if pokemon %}
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Test</th>
+            <th scope="col">Health</th>
+            <th scope="col">Defense</th>
+            <th scope="col">Attack</th>
+            <th scope="col">Ability 1</th>
+            <th scope="col">Ability 2</th>        
+            <th scope="col">Photo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{pokemon.name}}</th>
+      <td>{{pokemon.hp}}</td>
+      <td>{{pokemon.defense}}</td>
+      <td>{{pokemon.attack}}</td>
+      <td>{{pokemon.ability_1}}</td>
+      <td>{{pokemon.ability_2}}</td>
+      <td>{{pokemon.sprite}}</td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}

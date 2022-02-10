@@ -4,11 +4,6 @@ from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from .import bp as auth
 
-@auth.route('/', methods=['GET'])
-@login_required
-def index():
-    return render_template('index.html.j2')
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -20,8 +15,10 @@ def login():
             login_user(u)
             flash('Welcome to Pokemon Paradise!','success')
             return redirect(url_for('main.index'))
+        
         flash('Incorrect Email Address/Password','danger')
         return render_template('login.html.j2',form=form)
+    
     return render_template('login.html.j2',form=form)
 
 @auth.route('/logout')

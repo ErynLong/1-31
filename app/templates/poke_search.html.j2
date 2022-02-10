@@ -6,7 +6,7 @@ Pokemon Info
 
 {% block content%}
 <h1>Pokemon Information Search</h1>
-<form action="{{url_for('poke_search')}}" method='POST'>
+<form action="{{url_for('main.poke_search')}}" method='POST'>
 {{form.hidden_tag()}}
     <div class="mb-3">
         <label for="enter_field" class="form-label">Enter Pokemon Name</label>

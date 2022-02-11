@@ -1,4 +1,4 @@
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, EditProfileForm
 from flask import render_template, request, flash, url_for, redirect
 from app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
@@ -49,3 +49,28 @@ def register():
         flash('You\'re registered!', 'success')
         return redirect(url_for('auth.login'))
     return render_template('register.html.j2', form = form)
+
+@auth.route('/edit_profile', methods=['GET','POST'])
+@login_required
+def edit_profile():
+    form = EditProfileForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        new_user_data={
+                "first_name":form.first_name.data.title(),
+                "last_name":form.last_name.data.title(),
+                "email":form.email.data.lower(),
+                "password":form.password.data
+        }
+        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if user and user.email != current_user.email:
+            flash('Email already in use','danger')
+            return redirect(url_for('auth.edit_profile'))
+        try:
+            current_user.from_dict(new_user_data)
+            current_user.save()
+            flash('Profile Updated', 'success')
+        except:
+            flash('There was an unexpected Error. Please Try again', 'danger')
+            return redirect(url_for('auth.edit_profile'))
+        return redirect(url_for('main.index'))
+    return render_template('edit_profile.html.j2', form = form)

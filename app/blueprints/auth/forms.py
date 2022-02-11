@@ -20,3 +20,12 @@ class RegisterForm(FlaskForm):
         same_email_user = User.query.filter_by(email = field.data).first()
         if same_email_user:
             raise ValidationError('Email is already in use.')
+
+class EditProfileForm(FlaskForm):
+    first_name= StringField('First Name',validators=[DataRequired()])
+    last_name= StringField('Last Name',validators=[DataRequired()])
+    email = StringField('Email Address',validators=[DataRequired(),Email()])
+    password = PasswordField('Password',validators=[DataRequired()])
+    confirm_password = PasswordField('Password',validators=[DataRequired(), EqualTo('password',message='Passwords have to match')])
+    submit = SubmitField('Update')
+    

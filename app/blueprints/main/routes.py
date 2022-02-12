@@ -1,6 +1,7 @@
 from .forms import AshKetchum
+from app.models import Pokedata
 from flask import render_template, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 import requests
 from .import bp as main
 
@@ -28,6 +29,14 @@ def poke_search():
             "ability_2":response.json()['abilities'][1]['ability']['name'] if len(response.json()['abilities']) > 1 else "",               
             "sprite": poke['sprites']['front_shiny']
             }
+            if not Pokedata.exists(poke_dict["name"]):
+                add_poke = Pokedata()
+                add_poke.from_dict(poke_dict)
+                add_poke.save()  
+        
+            user = current_user
+            user.add_to_team(Pokedata.exists(poke_dict["name"]))
+
             return render_template('poke_search.html.j2', form=form, pokemon = poke_dict)
         else:
             error_message = "Pokemon not found."

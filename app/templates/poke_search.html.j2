@@ -16,7 +16,7 @@ Pokemon Info
         <button type="submit" class="btn btn-primary">Submit</button>
 </form> 
 {% if pokemon %}
-    <table class="table">
+    {# <table class="table">
   <thead>
     <tr>
       <th scope="col">Test</th>
@@ -39,6 +39,20 @@ Pokemon Info
       <td>{{pokemon.sprite}}</td>
     </tr>
   </tbody>
-</table>
+</table> #}
+<div class="card" style="width: 18rem;">
+    <img src="{{pokemon.sprite}}" class="card-img-top" alt="pokemon sprite">
+    <div class="card-body">
+        <h5 class="card-title">{{pokemon.name.title()}}</h5>
+        <p class="card-text">
+            <ul>
+            <li>HP: {{pokemon.hp}}</li>
+            <li>Defense: {{pokemon.defense}}</li>
+            <li>Attack: {{pokemon.attack}}</li>
+            <li>Ability 1: {{pokemon.ability_1}}</li>
+            <li>Ability 2: {{pokemon.ability_2}}</li>
+            </ul>
+        </p>
+    </div>
 {% endif %}
 {% endblock %}

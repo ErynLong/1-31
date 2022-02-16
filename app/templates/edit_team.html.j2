@@ -1,0 +1,41 @@
+{% extends 'base.html.j2' %}
+{% block title %}
+Edit Team
+{% endblock title%}
+
+{% block content %}
+<h1>Edit Team</h1>
+{% if team %}
+{% for pokemon in team %}
+<div class="card" style="width: 18rem;">
+    <img src="{{pokemon.sprite}}" class="card-img-top" alt="pokemon sprite">
+    <div class="card-body">
+        <h5 class="card-title">{{pokemon.name.title()}}</h5>
+        <p class="card-text">
+            <ul>
+            <li>HP: {{pokemon.hp}}</li>
+            <li>Defense: {{pokemon.defense}}</li>
+            <li>Attack: {{pokemon.attack}}</li>
+            <li>Ability 1: {{pokemon.ability_1}}</li>
+            <li>Ability 2: {{pokemon.ability_2}}</li>
+            <a href="{{url_for('main.remove_pokemon', id=pokemon.id)}}"class="btn btn-primary">Remove</a>
+            </ul>
+        </p>
+    </div>
+{% endfor %}
+{% endif %}
+<form action="{{url_for('main.edit_team')}}" method='POST'>
+{# {{form.hidden_tag()}} #}
+    <div class="mb-3">
+        <label for="enter_field" class="form-label">Enter Pokemon Name</label>
+        <input type="text" name = "enter_field" class="form-control" id="field">
+    </div>
+</form> 
+
+
+
+
+
+
+
+{% endblock content%}

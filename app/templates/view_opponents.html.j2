@@ -1,0 +1,35 @@
+{% extends 'base.html.j2' %}
+{% block title %}
+Opponents
+{% endblock title %}
+
+{% block content %}
+<h1>Choose an Opponent</h1>
+<a href="{{url_for('main.view_opponents')}}"class="btn btn-primary">Show Opponents</a>
+{% for player in show %}
+
+<div class="card" style="width: 18rem;">
+<div class="card-body">
+    <h5 class="card-title">{{player.id}}</h5>
+    <p class="card-text">
+    
+<a href="{{url_for('main.battle', id=player.id)}}"class="btn btn-primary">Battle</a>
+</p>
+</div>
+    {# {<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{player.id}}</h5>
+        <p class="card-text">}
+            <ul>
+            <li>Pokemon Name {{.name}}</li>
+            <li>Defense: {{pokemon.defense}}</li>
+            <li>Attack: {{pokemon.attack}}</li>
+            <li>Ability 1: {{pokemon.ability_1}}</li>
+            <li>Ability 2: {{pokemon.ability_2}}</li>
+            <a href="{{url_for('main.remove_pokemon', id=pokemon.id)}}"class="btn btn-primary">Remove</a>
+            </ul>
+        </p>
+    </div> #}
+{% endfor %}
+{% endblock %}
+
